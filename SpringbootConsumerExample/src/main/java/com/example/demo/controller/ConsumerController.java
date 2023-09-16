@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -49,5 +50,12 @@ public class ConsumerController {
 
 		List<?> liststudent = restTemplate.getForEntity("http://localhost:9000/getAll", List.class).getBody();
 		return ResponseEntity.ok(liststudent);
+	}
+	
+	@GetMapping(value = "/getconsumeStudentdata/{div}/{name}")
+	public ResponseEntity<Student> getSConsumedStudentdataSingle(@PathVariable String div,@PathVariable String name) {
+
+		Student student = restTemplate.getForObject("http://localhost:9000//get/"+div+"/"+name, Student.class);
+		return ResponseEntity.ok(student);
 	}
 }
